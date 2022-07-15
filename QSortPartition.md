@@ -11,6 +11,6 @@ Solution will be tested as sorting algorithm.
 
 First line contains single integer number: 0 ≤ N ≤ 100000. Next line contains N integer numbers divided by space character: 0 ≤ xi ≤ 109.
 
-###Output format
+### Output format
 
 On single line you should print N integer numbers, divided by space character: xi in sorted (non-decreasing) order.
