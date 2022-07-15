@@ -1,0 +1,62 @@
+import random
+
+
+def unitWeight(c, w):
+    return c / w
+
+
+def partition(x, l, r, pivot):
+    ir = l
+    r = r - 1
+    while ir <= r:
+        if x[ir] > pivot:
+            x[l], x[ir] = x[ir], x[l]
+            l += 1
+            ir += 1
+        elif x[ir] < pivot:
+            x[ir], x[r] = x[r], x[ir]
+            r -= 1
+        else:
+            ir += 1
+    return l, ir
+
+
+def qsort(x, l=0, r=None):
+    if r is None:
+        r = len(x)
+    if (r - l) > 1:
+        pivot = x[random.randint(l, r - 1)]
+        il, ir = partition(x, l, r, pivot)
+        qsort(x, l, il)
+        qsort(x, ir, r)
+
+
+if __name__ == '__main__':
+    n, w = map(int, input().split())
+
+    bunches = []
+    for i in range(n):
+        bunches.append(list(map(int, input().split())))
+
+    extra = sum([b[0] for b in bunches if b[1] == 0])
+    bunches = [[unitWeight(b[0], b[1]), b[0], b[1]]
+               for b in bunches
+               if b[1] > 0]
+
+    qsort(bunches)
+
+    total = 0
+    i = 0
+    while i != len(bunches) and w > 0:
+        ci, wi = bunches[i][1:]
+
+        if wi <= w:
+            total += ci
+            w -= wi
+        else:
+            total += ci * w // wi
+            break
+
+        i += 1
+
+    print(total + extra)
